@@ -5,6 +5,17 @@ erro = '\nArquivo não disponível, favor verificar a FPT fo arquivo '
 sucesso = 0
 falho = 0
 
+#Criação de função para download e tratamento de arquivos
+def pegaETrataArquivo (url, file, end):    
+    try:
+        wget.download(url)  
+        shutil.move(file, end)      
+        sucesso =+ 1
+        return sucesso
+    except:
+        print('Download falhou '+ file)
+        falho =+ 1
+        return falho
 
 
 
@@ -22,53 +33,23 @@ else:
     os.makedirs(end)   
     print('pasta /PNAD_2019 criada.')
 
-
-try:
-    wget.download('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/LEIA-ME.pdf')
-    shutil.move('LEIA-ME.pdf', end)
-    sucesso = sucesso + 1
-except:
-    print(erro+'LEIA-ME.pdf.')
-    falho = falho + 1
-
-try:
-    wget.download('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/PNADC_Pesquisas_Suplementares_Anuais_20200715.pdf')
-    shutil.move('PNADC_Pesquisas_Suplementares_Anuais_20200715.pdf', end)
-    sucesso = sucesso + 1
-except:
-    print(erro+'PNADC_Pesquisas_Suplementares_Anuais_20200715.pdf.')
-    falho = falho + 1
-
-
-try:
-    wget.download('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/atualizacoes_divulgacao_anual_20200716.txt')
-    shutil.move('atualizacoes_divulgacao_anual_20200716.txt', end)
-    sucesso = sucesso + 1
-except:
-    print(erro+'atualizacoes_divulgacao_anual_20200716.txt')
-    falho = falho + 1
-
+pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/LEIA-ME.pdf','LEIA-ME.pdf', end )
+pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/PNADC_Pesquisas_Suplementares_Anuais_20200715.pdf', 'PNADC_Pesquisas_Suplementares_Anuais_20200715.pdf', end )
+pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/atualizacoes_divulgacao_anual_20200716.txt', 'atualizacoes_divulgacao_anual_20200716.txt', end)
 end = ''
+
 # Acumulados em determinada visita
-
 #Criação da pasta Acumulados em determinada visita
-end = './PNAD_2019/Acumulados em determinada visita'
 
+end = './PNAD_2019/Acumulados em determinada visita'
 if os.path.exists(end):
     print('Pasta /Acumulados em determinada visita já existente.')
 else:
     os.makedirs(end)   
     print('pasta /Acumulados em determinada visita criada.')
 
-
 #Trata arquivos
-try:
-    wget.download('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Visita/LEIA-ME.pdf')
-    shutil.move('LEIA-ME.pdf', end)
-    sucesso = sucesso + 1
-except:
-    print(erro+'LEIA-ME.pdf')
-    falho = falho + 1
+pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Visita/LEIA-ME.pdf', 'LEIA-ME.pdf', end)
 try:
     wget.download('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Visita/PNADC_Pesquisas_Suplementares_Anuais_20200715.pdf')
     shutil.move('PNADC_Pesquisas_Suplementares_Anuais_20200715.pdf', end)
