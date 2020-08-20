@@ -10,11 +10,11 @@ def download (url, file, end):
     try:
         wget.download(url)  
         shutil.move(file, end)      
-        sucesso =+ 1
+        sucesso = sucesso + 1
         return sucesso
     except:
         print('Download falhou '+ file)
-        falho =+ 1
+        falho = falho + 1
         return falho
 
 

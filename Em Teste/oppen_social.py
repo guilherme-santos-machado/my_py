@@ -1,9 +1,19 @@
 import wget
 import os
 import shutil
-erro = '\nArquivo não disponível, favor verificar a FPT fo arquivo '
+from datetime import date
+
+#Variáveis
+k = date.today()
+anoInicial = 2012
+thisYear = k.year
+pdf = '.pdf'
+txt = '.txt'
 sucesso = 0
 falho = 0
+
+#Msgs
+erro = '\nArquivo não disponível, favor verificar a FPT fo arquivo '
 
 #Criação de função para download e tratamento de arquivos
 def pegaETrataArquivo (url, file, end):  
@@ -18,6 +28,34 @@ def pegaETrataArquivo (url, file, end):
         print('\nDownload falhou '+ file)
         falho = falho + 1
         return falho
+
+
+def criaContinuacao(link, tipo):
+    file = 0
+    for i in range (12):
+        i = i + 1
+        mes = f'{i}'
+        for y in range (31):
+            y = y + 1
+            dia = f'{y}'
+            if i<10:
+                mes ='0' + f'{i}'                  
+            else:
+                mes = f'{i}'
+            if y<10:
+                dia = '0' + f'{y}' 
+            else:
+                dia = f'{y}'
+            data = (f'{thisYear}' + mes + dia)
+            try:
+                wget.download(link + data + tipo)
+                print('\nPegando arquivo')
+                file = 1
+                break
+            except:
+                print('\nArquivo não encontrado na data: ',data)
+        if file == 1:
+            break
 
 
 
