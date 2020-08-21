@@ -9,6 +9,9 @@ anoInicial = 2012
 thisYear = k.year
 pdf = '.pdf'
 txt = '.txt'
+xls = '.xls'
+pac = '.zip'
+local = "./"
 sucesso = 0
 falho = 0
 
@@ -58,6 +61,19 @@ def criaContinuacao(link, tipo):
             break
 
 
+def movimentaArquivo(local, destination):
+    files = os.listdir(local)
+    for file in files:
+        try: 
+            extensao = file.split('.')[1]
+            if extensao != 'git':
+                shutil.move(f"{local}/{file}", destination)
+            else:
+                print('TA TENTANDO MOVER MEU .GIT?')
+        except:
+            print(file+' é uma pasta')
+
+
 
 #ANUAL ANUAL ANUAL ANUAL ANUAL ANUAL ANUAL ANUAL ANUAL ANUAL ANUAL ANUAL ANUAL ANUAL ANUAL ANUAL ANUAL ANUAL ANUAL ANUAL ANUAL ANUAL ANUAL ANUAL
 
@@ -73,9 +89,11 @@ else:
     os.makedirs(end)   
     print('\npasta /PNAD_2019 criada.')
 
+#Trata arquivo
 pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/LEIA-ME.pdf','LEIA-ME.pdf', end )
-pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/PNADC_Pesquisas_Suplementares_Anuais_20200715.pdf', 'PNADC_Pesquisas_Suplementares_Anuais_20200715.pdf', end )
-pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/atualizacoes_divulgacao_anual_20200716.txt', 'atualizacoes_divulgacao_anual_20200716.txt', end)
+criaContinuacao('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/PNADC_Pesquisas_Suplementares_Anuais_', pdf )
+criaContinuacao('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/atualizacoes_divulgacao_anual_', txt)
+movimentaArquivo(local, end)
 end = ''
 
 # Acumulados em determinada visita
@@ -90,7 +108,8 @@ else:
 
 #Trata arquivos
 pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Visita/LEIA-ME.pdf', 'LEIA-ME.pdf', end)
-pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Visita/PNADC_Pesquisas_Suplementares_Anuais_20200715.pdf', 'PNADC_Pesquisas_Suplementares_Anuais_20200715.pdf', end)
+criaContinuacao('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Visita/PNADC_Pesquisas_Suplementares_Anuais_', pdf)
+movimentaArquivo(local, end)
 end = ''
 #Geral - Acumulados em determinada visita
 
@@ -104,7 +123,7 @@ else:
 
 #Trata arquivos
 pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Visita/Documentacao_Geral/Chaves_PNADC.pdf', 'Chaves_PNADC.pdf', end)
-pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Visita/Documentacao_Geral/Definicao_variaveis_derivadas_PNADC_20200211.pdf', 'Definicao_variaveis_derivadas_PNADC_20200211.pdf', end)
+criaContinuacao('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Visita/Documentacao_Geral/Definicao_variaveis_derivadas_PNADC_', pdf)
 pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Visita/Documentacao_Geral/deflacionamento_PNADC_anual_visita.txt', 'deflacionamento_PNADC_anual_visita.txt', end)
 pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Visita/Documentacao_Geral/deflator_PNADC_2017.xls', 'deflator_PNADC_2017.xls', end)
 pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Visita/Documentacao_Geral/deflator_PNADC_2018.xls', 'deflator_PNADC_2018.xls', end)
@@ -112,8 +131,9 @@ pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional
 pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Visita/Documentacao_Geral/Estrutura_Atividade_CNAE_Domiciliar_2_0.xls', 'Estrutura_Atividade_CNAE_Domiciliar_2_0.xls', end)
 pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Visita/Documentacao_Geral/Estrutura_Ocupacao_COD.xls', 'Estrutura_Ocupacao_COD.xls', end)
 pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Visita/Documentacao_Geral/Grupamentos_ocupacionais_atividades_PNADC.pdf', 'Grupamentos_ocupacionais_atividades_PNADC.pdf', end)
-pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Visita/Documentacao_Geral/historico_temas_PNADC_anual_visita_20200506.txt', 'historico_temas_PNADC_anual_visita_20200506.txt', end)
+criaContinuacao('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Visita/Documentacao_Geral/historico_temas_PNADC_anual_visita_', txt)
 pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Visita/Documentacao_Geral/PNADcIBGE_Deflator_Anual_Visita.pdf', 'PNADcIBGE_Deflator_Anual_Visita.pdf', end)
+movimentaArquivo(local, end)
 end = ''
 
 #Acumulados em determinada visita
@@ -146,6 +166,7 @@ pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional
 pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Visita/Visita_1/Dados/PNADC_2017_visita1_20191016.zip', 'PNADC_2017_visita1_20191016.zip', end)
 pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Visita/Visita_1/Dados/PNADC_2018_visita1_20191218.zip', 'PNADC_2018_visita1_20191218.zip', end)
 pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Visita/Visita_1/Dados/PNADC_2019_visita1.zip', 'PNADC_2019_visita1.zip', end)
+movimentaArquivo(local, end)
 end = ''
 #Visita 1 - Documentação
 
@@ -171,6 +192,7 @@ pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional
 pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Visita/Visita_1/Documentacao/input_PNADC_2018_visita1.txt', 'input_PNADC_2018_visita1.txt', end)
 pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Visita/Visita_1/Documentacao/input_PNADC_2019_visita1.txt', 'input_PNADC_2019_visita1.txt', end)
 pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Visita/Visita_1/Documentacao/Observacoes_PNADC_2015_2016_visita1.pdf', 'Observacoes_PNADC_2015_2016_visita1.pdf', end)
+movimentaArquivo(local, end)
 end = '' 
 
 #Visita 2
@@ -198,6 +220,7 @@ pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional
 pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Visita/Visita_5/Dados/PNADC_2017_visita5_20191016.zip', 'PNADC_2017_visita5_20191016.zip', end)
 pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Visita/Visita_5/Dados/PNADC_2018_visita5_20191016.zip', 'PNADC_2018_visita5_20191016.zip', end)
 pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Visita/Visita_5/Dados/PNADC_2019_visita5_20191016.zip', 'PNADC_2019_visita5_20191016.zip', end)
+movimentaArquivo(local, end)
 end = ''
 
 #Visita 2 - Documentação
@@ -220,6 +243,7 @@ pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional
 pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Visita/Visita_5/Documentacao/dicionario_PNADC_microdados_2017_visita5.xls', 'dicionario_PNADC_microdados_2017_visita5.xls', end)
 pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Visita/Visita_5/Documentacao/dicionario_PNADC_microdados_2018_visita5.xls', 'dicionario_PNADC_microdados_2018_visita5.xls', end)
 pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Visita/Visita_5/Documentacao/dicionario_PNADC_microdados_2019_visita5.xls', 'dicionario_PNADC_microdados_2019_visita5.xls', end)
+movimentaArquivo(local, end)
 end = ''
 
 
@@ -235,7 +259,8 @@ else:
 
 #Trata arquivo
 pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Visita/LEIA-ME.pdf', 'LEIA-ME.pdf', end)
-pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Visita/PNADC_Pesquisas_Suplementares_Anuais_20200715.pdf', 'PNADC_Pesquisas_Suplementares_Anuais_20200715.pdf', end)
+criaContinuacao('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Visita/PNADC_Pesquisas_Suplementares_Anuais_', pdf)
+movimentaArquivo(local, end)
 end = ''
 
 #Criação da pasta Visita 5 - Dados
@@ -251,6 +276,7 @@ pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional
 pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Visita/Visita_5/Dados/PNADC_2018_visita5_20191016.zip', 'PNADC_2018_visita5_20191016.zip', end)
 pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Visita/Visita_5/Dados/PNADC_2017_visita5_20191016.zip', 'PNADC_2017_visita5_20191016.zip', end)
 pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Visita/Visita_5/Dados/PNADC_2016_visita5_20191016.zip', 'PNADC_2016_visita5_20191016.zip', end)
+movimentaArquivo(local, end)
 end = ''
 
 
@@ -272,6 +298,7 @@ pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional
 pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Visita/Visita_5/Documentacao/dicionario_PNADC_microdados_2017_visita5.xls', 'dicionario_PNADC_microdados_2017_visita5.xls', end)
 pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Visita/Visita_5/Documentacao/dicionario_PNADC_microdados_2018_visita5.xls', 'dicionario_PNADC_microdados_2018_visita5.xls', end)
 pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Visita/Visita_5/Documentacao/dicionario_PNADC_microdados_2019_visita5.xls', 'dicionario_PNADC_microdados_2019_visita5.xls', end)
+movimentaArquivo(local, end)
 end = ''
 
 
@@ -292,7 +319,8 @@ else:
 
 #Trata arquivo
 pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Trimestre/LEIA-ME.pdf', 'LEIA-ME.pdf', end)
-pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Trimestre/PNADC_Pesquisas_Suplementares_Anuais_20200812.pdf', 'PNADC_Pesquisas_Suplementares_Anuais_20200812.pdf', end)
+criaContinuacao('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Trimestre/PNADC_Pesquisas_Suplementares_Anuais_', pdf)
+movimentaArquivo(local, end)
 end = ''
 
 
@@ -311,8 +339,9 @@ pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional
 pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Trimestre/Documentacao_Geral/Grupamentos_ocupacionais_atividades_PNADC.pdf', 'Grupamentos_ocupacionais_atividades_PNADC.pdf', end)
 pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Trimestre/Documentacao_Geral/Estrutura_Ocupacao_COD.xls', 'Estrutura_Ocupacao_COD.xls', end)
 pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Trimestre/Documentacao_Geral/Estrutura_Atividade_CNAE_Domiciliar_2_0.xls', 'Estrutura_Atividade_CNAE_Domiciliar_2_0.xls', end)
-pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Trimestre/Documentacao_Geral/Definicao_variaveis_derivadas_PNADC_20200211.pdf', 'Definicao_variaveis_derivadas_PNADC_20200211.pdf', end)
+criaContinuacao('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Trimestre/Documentacao_Geral/Definicao_variaveis_derivadas_PNADC_', pdf)
 pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Trimestre/Documentacao_Geral/Chaves_PNADC.pdf', 'Chaves_PNADC.pdf', end)
+movimentaArquivo(local, end)
 end = ''
 
 #Concentrados em determinado trimestre
@@ -340,6 +369,7 @@ else:
 
 #Trata arquivo
 pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Trimestre/Trimestre_1/Dados/informacao_importante_anual_trimestre1.txt', 'informacao_importante_anual_trimestre1.txt', end)
+movimentaArquivo(local, end)
 end = ''
 
 
@@ -355,6 +385,7 @@ else:
 
 #Trata arquivo
 pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Trimestre/Trimestre_1/Documentacao/informacao_importante_anual_trimestre1.txt', 'informacao_importante_anual_trimestre1.txt', end)
+movimentaArquivo(local, end)
 end = ''
 
 
@@ -369,10 +400,11 @@ else:
     print('\npasta /Trimestre 2/Dados criada.')
 
 #Trata arquivo
-pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Trimestre/Trimestre_2/Dados/PNADC_2016_trimestre2_20200716.zip', 'PNADC_2016_trimestre2_20200716.zip', end)
-pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Trimestre/Trimestre_2/Dados/PNADC_2017_trimestre2_20200716.zip', 'PNADC_2017_trimestre2_20200716.zip', end)
-pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Trimestre/Trimestre_2/Dados/PNADC_2018_trimestre2_20200716.zip', 'PNADC_2018_trimestre2_20200716.zip', end)
-pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Trimestre/Trimestre_2/Dados/PNADC_2019_trimestre2_20200716.zip', 'PNADC_2019_trimestre2_20200716.zip', end)
+criaContinuacao('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Trimestre/Trimestre_2/Dados/PNADC_2016_trimestre2_', pac)
+criaContinuacao('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Trimestre/Trimestre_2/Dados/PNADC_2017_trimestre2_', pac)
+criaContinuacao('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Trimestre/Trimestre_2/Dados/PNADC_2018_trimestre2_', pac)
+criaContinuacao('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Trimestre/Trimestre_2/Dados/PNADC_2019_trimestre2_', pac)
+movimentaArquivo(local, end)
 end = ''
 
 #Trimestre 2 - Documentação
@@ -386,11 +418,12 @@ else:
     print('\npasta /Trimestre 2/Documentação criada.')
 
 #Trata arquivo
-pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Trimestre/Trimestre_2/Documentacao/input_PNADC_trimestre2_20200716.txt', 'input_PNADC_trimestre2_20200716.txt', end)
-pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Trimestre/Trimestre_2/Documentacao/dicionario_PNADC_microdados_trimestre2_20200716.xls', 'dicionario_PNADC_microdados_trimestre2_20200716.xls', end)
-pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Trimestre/Trimestre_2/Documentacao/deflator_PNADC_2019_trimestre2_20200716.xls', 'deflator_PNADC_2019_trimestre2_20200716.xls', end)
-pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Trimestre/Trimestre_2/Documentacao/deflator_PNADC_2018_trimestre2_20200716.xls', 'deflator_PNADC_2018_trimestre2_20200716.xls', end)
-pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Trimestre/Trimestre_2/Documentacao/deflator_PNADC_2017_trimestre2_20200716.xls', 'deflator_PNADC_2017_trimestre2_20200716.xls', end)
+criaContinuacao('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Trimestre/Trimestre_2/Documentacao/input_PNADC_trimestre2_', txt)
+criaContinuacao('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Trimestre/Trimestre_2/Documentacao/dicionario_PNADC_microdados_trimestre2_', xls)
+criaContinuacao('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Trimestre/Trimestre_2/Documentacao/deflator_PNADC_2019_trimestre2_', xls)
+criaContinuacao('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Trimestre/Trimestre_2/Documentacao/deflator_PNADC_2018_trimestre2_', xls)
+criaContinuacao('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Trimestre/Trimestre_2/Documentacao/deflator_PNADC_2017_trimestre2_', xls)
+movimentaArquivo(local, end)
 end = ''
 
 
@@ -406,6 +439,7 @@ else:
 
 #Trata arquivo
 pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Trimestre/Trimestre_3/Dados/PNADC_2019_trimestre3.zip', 'PNADC_2019_trimestre3.zip', end)
+movimentaArquivo(local, end)
 end = ''
 
 
@@ -423,6 +457,7 @@ else:
 pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Trimestre/Trimestre_3/Documentacao/input_PNADC_trimestre3.txt', 'input_PNADC_trimestre3.txt', end)
 pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Trimestre/Trimestre_3/Documentacao/dicionario_PNADC_microdados_trimestre3.xls', 'dicionario_PNADC_microdados_trimestre3.xls', end)
 pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Trimestre/Trimestre_3/Documentacao/deflator_PNADC_2019_trimestre3.xls', 'deflator_PNADC_2019_trimestre3.xls', end)
+movimentaArquivo(local, end)
 end = ''
 
 
@@ -437,9 +472,10 @@ else:
     print('\npasta /Trimestre 4/Dados criada.')
 
 #Trata arquivo
-pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Trimestre/Trimestre_4/Dados/PNADC_2016_trimestre4_20200429.zip', 'PNADC_2016_trimestre4_20200429.zip', end)
-pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Trimestre/Trimestre_4/Dados/PNADC_2017_trimestre4_20200429.zip', 'PNADC_2017_trimestre4_20200429.zip', end)
+criaContinuacao('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Trimestre/Trimestre_4/Dados/PNADC_2016_trimestre4_', pac)
+criaContinuacao('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Trimestre/Trimestre_4/Dados/PNADC_2017_trimestre4_', pac)
 pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Trimestre/Trimestre_4/Dados/PNADC_2018_trimestre4.zip', 'PNADC_2018_trimestre4.zip', end)
+movimentaArquivo(local, end)
 end = ''
 
 
@@ -456,8 +492,9 @@ else:
 #Trata arquivo
 pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Trimestre/Trimestre_4/Documentacao/deflator_PNADC_2017_trimestre4.xls', 'deflator_PNADC_2017_trimestre4.xls', end)
 pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Trimestre/Trimestre_4/Documentacao/deflator_PNADC_2018_trimestre4.xls', 'deflator_PNADC_2018_trimestre4.xls', end)
-pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Trimestre/Trimestre_4/Documentacao/dicionario_PNADC_microdados_trimestre4_20200429.xls', 'dicionario_PNADC_microdados_trimestre4_20200429.xls', end)
-pegaETrataArquivo('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Trimestre/Trimestre_4/Documentacao/input_PNADC_trimestre4_20200429.txt', 'input_PNADC_trimestre4_20200429.txt', end)
+criaContinuacao('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Trimestre/Trimestre_4/Documentacao/dicionario_PNADC_microdados_trimestre4_', xls)
+criaContinuacao('ftp://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Trimestre/Trimestre_4/Documentacao/input_PNADC_trimestre4_', txt)
+movimentaArquivo(local, end)
 end = ''
 
 
