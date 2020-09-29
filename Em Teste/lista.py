@@ -1,4 +1,7 @@
-lista =['teste', 1, 'queijo']
+lista =['teste',
+        'arroz',
+        'feijão',
+        1]
 
 for item in lista:
 
