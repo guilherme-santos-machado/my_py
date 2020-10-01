@@ -163,5 +163,5 @@ movimentaArquivo(source='./', destination='./download')
 #Download de bases de Escolas 2007 - 2019 - Indicador de Fluxo da Educação Superior
 
 
-import extrai_limpa_zip
-import retira_pasta
+# import extrai_limpa_zip
+# import retira_pasta
