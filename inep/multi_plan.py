@@ -6,10 +6,10 @@ import shutil
 #Alteração da função para editar o header e coluna index
 def movimentaArquivo(source, destination):
     if os.path.exists(destination):
-        print('\nPasta /PNAD_2019 já existente.')
+        print('\nPasta '+destination)
     else:
         os.makedirs(destination)   
-        print('\npasta /PNAD_2019 criada.')
+        print('\npasta '+destination)
     files = os.listdir(source)
     for file in files:
         try: 
@@ -28,12 +28,16 @@ def listaParaEdicao(source):
     for file in files:
         try: 
             extensao = file.split('.')[1]
+            nameFile = file.split('.')[0]
             if extensao != 'git':
-                df = pd.read_csv(file, low_memory=False, header=1, index_col=1)
-                df = df.loc[:, ~df.columns.str.contains('^Unnamed')]
-                df = df.drop(columns=['7'])
-                df.replace({'--': np.nan}, inplace=True)
-                df.to_csv(file)
+                try:
+                    df = pd.read_csv(file, low_memory=False, header=1, index_col=1)
+                    df = df.loc[:, ~df.columns.str.contains('^Unnamed')]
+                    df = df.drop(columns=['7'])
+                    df.replace({'--': np.nan}, inplace=True)
+                    df.to_csv(nameFile+'.csv')
+                except:
+                    print('Erro ao editar '+file)
             else:
                 print('------------- Pela regra, está tentando mover algum arquivo .git')
         except:
@@ -48,6 +52,7 @@ files = os.listdir(source)
 for file in files:
     try: 
         extensao = file.split('.')[1]
+        nameFile = file.split('.')[0]
         if extensao != 'git':
             try:
                 df = pd.ExcelFile(source+file)
@@ -56,7 +61,7 @@ for file in files:
                     df1 = pd.read_excel(df, sheet_name=i)
                     df1.drop(df1.head(7).index,inplace=True)    
                     df1.drop(df1.tail(2).index,inplace=True)
-                    df1.to_csv(file+'_'+i+'.csv')
+                    df1.to_csv(i+'_'+nameFile+'.csv')
             except:
                 print(file+' Sem autorização de acesso.')
         else:
@@ -66,5 +71,14 @@ for file in files:
   
     
 listaParaEdicao(source = './')
+
+source = './'
+files = os.listdir(source)
+for file in files:
+    extensao = file.split('.')[0]
+    if extensao == 'download':
+        shutil.rmtree(source+file, ignore_errors=True)
+    else:
+        print(file+' não foi apagado.')
 
 
