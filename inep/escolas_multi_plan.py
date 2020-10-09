@@ -43,7 +43,7 @@ def listaParaEdicao(source):
         except:
             print(file+'-----------Pela regra, esta tentando acessar ou alterar uma pasta (negado)')
     #Transferencia dos arquivos já tratados para uma pasta separada
-    movimentaArquivo(source = './', destination = './tratado')
+    movimentaArquivo(source = './', destination = './escolas')
 
 
 #Teste de edição em massa para planilhas com várias abas
