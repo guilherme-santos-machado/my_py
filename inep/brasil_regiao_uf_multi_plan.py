@@ -1,9 +1,11 @@
+#Importação de bibliotecas
 import pandas as pd
 import numpy as np
 import os
 import shutil
 
-#Alteração da função para editar o header e coluna index
+###FUNÇÕES###
+#movimentaArquivo - Pega os arquivos a origem padrão "./" e joga para uma pasta de destino.
 def movimentaArquivo(source, destination):
     if os.path.exists(destination):
         print('\nPasta '+destination)
@@ -21,14 +23,14 @@ def movimentaArquivo(source, destination):
         except:
             print(file+' é uma pasta')
     
-
-
+#listaParaEdicao - Lista os arquivos de um local, apaga colunas com Unnamed, set "--" para "null"
 def listaParaEdicao(source):
     files = os.listdir(source)
     for file in files:
         try: 
             extensao = file.split('.')[1]
             nameFile = file.split('.')[0]
+            #Ignora o arquivo com extesão .git - Arquivo base do projeto para o GITHUB
             if extensao != 'git':
                 try:
                     df = pd.read_csv(file, low_memory=False,header=1, index_col=1)
@@ -46,8 +48,10 @@ def listaParaEdicao(source):
     movimentaArquivo(source = './', destination = './brasil regioes ufs')
 
 
-#Teste de edição em massa para planilhas com várias abas
+#Início do tratamento em Lista de um local
+#Definição do local
 source = "./download/"
+#Criação de LISTA com os arquivos do local
 files = os.listdir(source)
 for file in files:
     try: 
@@ -55,9 +59,11 @@ for file in files:
         nameFile = file.split('.')[0]
         if extensao != 'git':
             try:
+                #Cria lista com as abas do arquivo
                 df = pd.ExcelFile(source+file)
                 listaAbas = df.sheet_names
                 for i in listaAbas:
+                    #Deleta as 7 primeiras linhas e as duas últimas
                     df1 = pd.read_excel(df, sheet_name=i)
                     df1.drop(df1.head(7).index,inplace=True)    
                     df1.drop(df1.tail(2).index,inplace=True)
@@ -72,8 +78,10 @@ for file in files:
     
 listaParaEdicao(source = './')
 
+#Lisra a pasta raiz do projeto
 source = './'
 files = os.listdir(source)
+#Apaga a pasta "Download" e todos os arquivos não tratados, ignorando qualquer tipo de erro
 for file in files:
     extensao = file.split('.')[0]
     if extensao == 'download':

@@ -1,8 +1,10 @@
+#Importação de bibliotecas
 import wget
 import os
 import shutil
 
-#Criação de função para download e movimentação de arquivos
+##FUNÇÕES###
+#pegaETrataArquivo - Função cliada para fazer download em LISTA e retornar MSG de erro caso necessário
 def pegaETrataArquivo (lista):  
     for item in lista:
         try:
@@ -11,6 +13,7 @@ def pegaETrataArquivo (lista):
         except:
             print('\nDownload falhou '+ item)
 
+#movimentaArquivo - Pega os arquivos a origem padrão "./" e joga para uma pasta de destino.
 def movimentaArquivo(source, destination):
     files = os.listdir(source)
     for file in files:
@@ -164,12 +167,3 @@ print('100% - Download')
 
 #Move arquivos para a pasta de Download
 movimentaArquivo(source='./', destination='./download')
-
-
-#Download de bases de Escolas 2007 - 2019 - Taxas de Transição
-#Download de bases de Escolas 2007 - 2019 - Remuneração Média dos Docentes
-#Download de bases de Escolas 2007 - 2019 - Indicador de Fluxo da Educação Superior
-
-
-# import extrai_limpa_zip
-# import retira_pasta
